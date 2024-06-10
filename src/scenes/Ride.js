@@ -76,7 +76,7 @@ class RideScene extends Phaser.Scene {
         this.hades.update = hadesUpdate
 
         //outdoor/disembark
-        this.mtn = new Room(this, ["Awaiting Carts/Guests","Disembarking", "Returning Carts"], [-1, 600, 200])
+        this.mtn = new Room(this, ["Disembarking", "Returning Carts"], [600, 200])
         this.mtnLabel = this.add.text(this.sys.canvas.width *3/4, 420, "outdoor status", titleStyle)
         this.mtn.update = mtnUpdate
 

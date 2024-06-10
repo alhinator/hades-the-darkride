@@ -17,7 +17,7 @@ function boatUpdate(self, time, delta) {
             self.b3 = 0
             break;
         case self.statusList[0]:
-            if (self.b1 == 0 && self.scene.q1.currentGuests > 6) { //boarding
+            if (self.b1 == 0 && self.scene.q1.currentGuests >= 6) { //boarding
                 self.b1 = 1
                 self.addGuest(6)
                 self.scene.q1.subGuest(6)
@@ -41,7 +41,7 @@ function boatUpdate(self, time, delta) {
                 self.b1 = 2
 
             }
-            if (self.b2 == 0 && self.scene.q1.currentGuests > 6) { //boarding
+            if (self.b2 == 0 && self.scene.q1.currentGuests >= 6) { //boarding
                 self.b2 = 1
                 self.addGuest(6)
                 self.scene.q1.subGuest(6)
@@ -64,7 +64,7 @@ function boatUpdate(self, time, delta) {
             if (self.b2 == 1) { //transit
                 self.b2 = 2
             }
-            if (self.b3 == 0 && self.scene.q1.currentGuests > 6) { //boarding
+            if (self.b3 == 0 && self.scene.q1.currentGuests >= 6) { //boarding
                 self.b3 = 1
                 self.addGuest(6)
                 self.scene.q1.subGuest(6)
@@ -75,24 +75,24 @@ function boatUpdate(self, time, delta) {
                 self.durationTillSwitch = self.durationList[3]
             }
             break;
-            case self.statusList[3]:
-                if (self.b1 == -1) { //cycling
-                    self.b1 = 0
-                }
-                if (self.b2 == 2) { //dropping
-                    self.subGuest(6)
-                    self.scene.q2.addGuest(6)
-                    self.b2 = -1
-                }
-                if (self.b3 == 1) { //transit
-                    self.b3 = 2
-                }
-                self.durationTillSwitch -= delta
-                if (self.durationTillSwitch < 0) {
-                    self.currentStatus = self.statusList[0]
-                    self.durationTillSwitch = self.durationList[0]
-                }
-                break;
+        case self.statusList[3]:
+            if (self.b1 == -1) { //cycling
+                self.b1 = 0
+            }
+            if (self.b2 == 2) { //dropping
+                self.subGuest(6)
+                self.scene.q2.addGuest(6)
+                self.b2 = -1
+            }
+            if (self.b3 == 1) { //transit
+                self.b3 = 2
+            }
+            self.durationTillSwitch -= delta
+            if (self.durationTillSwitch < 0) {
+                self.currentStatus = self.statusList[0]
+                self.durationTillSwitch = self.durationList[0]
+            }
+            break;
 
 
     }
@@ -151,7 +151,7 @@ function q4Update(self, time, delta) {
             self.availableCarts = 24
             break;
         case self.statusList[0]:
-            if (self.availableCarts > 6 && self.currentGuests > 12) {
+            if (self.availableCarts >= 6 && self.currentGuests >= 12) {
                 self.currentStatus = self.statusList[1]
                 self.durationTillSwitch = self.durationList[1]
             }
@@ -396,8 +396,78 @@ function styxUpdate(self, time, delta) {
     }
 }
 function hadesUpdate(self, time, delta) {
-
+    //["Awaiting Carts/Guests","Opening Inner Doors", "Boss", "Opening Outer Doors", "Closing Outer Doors"]
+    switch (self.currentStatus) {
+        case "uninitialized":
+            self.currentStatus = self.statusList[0]
+            self.durationTillSwitch = self.durationList[0]
+            break;
+        case self.statusList[0]:
+            if (self.currentGuests > 0) {
+                self.currentStatus = self.statusList[1]
+                self.durationTillSwitch = self.durationList[1]
+            }
+            break;
+        case self.statusList[1]:
+            self.durationTillSwitch -= delta
+            if (self.durationTillSwitch < 0) {
+                self.currentStatus = self.statusList[2]
+                self.durationTillSwitch = self.durationList[2]
+            }
+            break;
+        case self.statusList[2]:
+            self.durationTillSwitch -= delta
+            if (self.durationTillSwitch < 0) {
+                self.currentStatus = self.statusList[3]
+                self.durationTillSwitch = self.durationList[3]
+            }
+            break;
+        case self.statusList[3]:
+            self.durationTillSwitch -= delta
+            if (self.durationTillSwitch < 0) {
+                self.currentStatus = self.statusList[4]
+                self.durationTillSwitch = self.durationList[4]
+            }
+            break;
+        case self.statusList[4]:
+            //if (self.scene.mtn.currentGuests == 0) {
+            self.currentStatus = self.statusList[0]
+            self.durationTillSwitch = self.durationList[0]
+            self.subGuest(12)
+            self.subCart(6)
+            self.scene.mtn.addGuest(12)
+            self.scene.mtn.addCart(6)
+            //}
+            break;
+    }
 }
 function mtnUpdate(self, time, delta) {
+    switch (self.currentStatus) {
+        case "uninitialized":
+            self.currentStatus = self.statusList[0]
+            self.durationTillSwitch = self.durationList[0]
+            break;
+        case self.statusList[0]:
+            self.durationTillSwitch -= delta
+            if (self.durationTillSwitch < 0) {
+                self.currentStatus = self.statusList[1]
+                self.durationTillSwitch = self.durationList[1]
+                if (this.currentGuests >= 12) {
+                    this.subGuest(12)
+                }
+            }
+            break;
+        case self.statusList[1]:
+            self.durationTillSwitch -= delta
+            if (self.durationTillSwitch < 0) {
+                self.currentStatus = self.statusList[0]
+                self.durationTillSwitch = self.durationList[0]
+                if (this.availableCarts >= 6) {
+                    this.subCart(6)
+                    this.scene.q4.addCart(6)
+                }
+            }
+            break;
 
+    }
 }
