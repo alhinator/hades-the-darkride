@@ -31,7 +31,7 @@ class RideScene extends Phaser.Scene {
         this.q1.update = q1Update
 
         //charon's boat
-        this.boat = new Room(this, ["Boarding guests (1) & Cycling boat (2)", "In Transit (1) & Boarding Guests (2)", "Dropping off Guests (1) & In Transit (2)", "Boat cycling (1) Dropping off Guests (2)"], [600, 1200, 1200, 600])
+        this.boat = new Room(this, ["Boarding(1) Cycling(2) Dropping off(3)", "Transit(1) Boarding(2) Cycling(3)", "Dropping off(1) Transit(2) & Boarding(3)", "Cycling(1) Dropping off(2) Transit(3)"], [900, 900, 900, 900])
         this.boatLabel = this.add.text(this.sys.canvas.width *2/5, 20, "charon's boat\n" + this.boat.currentStatus + "\nguests:" + this.boat.currentGuests, titleStyle)
         this.boat.update = boatUpdate
 
@@ -51,32 +51,32 @@ class RideScene extends Phaser.Scene {
         this.q4.update = q4Update
 
         //tartarus
-        this.tar = new Room(this, ["Stage 1", "Stage 2", "Stage 3", "Boss", "Elevator", "awaiting empty asphodel"], [200, 200, 200, 300, 150, -1])
+        this.tar = new Room(this, ["Awaiting Carts/Guests","Stage 1", "Stage 2", "Stage 3", "Boss", "Elevator", "Awaiting Empty Asphodel"], [-1, 300, 300, 300, 450, 150, -1])
         this.tarLabel = this.add.text(this.sys.canvas.width / 4, 300, "tartarus ", titleStyle)
         this.tar.update = tarUpdate
         
         //asphodel
-        this.asp = new Room(this, ["Stage 1", "Stage 2", "Stage 3", "Boss", "Elevator", "awaiting empty elysium"], [200, 200, 200, 300, 150, -1])
+        this.asp = new Room(this, ["Awaiting Carts/Guests","Stage 1", "Stage 2", "Stage 3", "Boss", "Elevator", "Awaiting Empty Elysium"], [-1, 300, 300, 300, 450, 150, -1])
         this.aspLabel = this.add.text(this.sys.canvas.width / 2, 300, "asphodel ", titleStyle)
         this.asp.update = aspUpdate
 
         //elysium
-        this.ely = new Room(this, ["Stage 1", "Stage 2", "Stage 3", "Boss", "Elevator", "awaiting empty styx"], [200, 200, 200, 300, 150, -1])
+        this.ely = new Room(this, ["Awaiting Carts/Guests","Stage 1", "Stage 2", "Stage 3", "Boss", "Elevator", "Awaiting Empty Styx"], [-1, 300, 300, 300, 450, 150, -1])
         this.elyLabel = this.add.text(this.sys.canvas.width * 3 / 4, 300, "elysium ", titleStyle)
         this.ely.update = elyUpdate
 
         //styx
-        this.styx = new Room(this, ["Tunnels", "Awaiting Empty Hades"], [300, -1])
+        this.styx = new Room(this, ["Awaiting Carts/Guests","Tunnels", "Awaiting Empty Hades"], [-1, 300, -1])
         this.styxLabel = this.add.text(this.sys.canvas.width / 4, 420, "styx status", titleStyle)
         this.styx.update = styxUpdate
 
         //hades
-        this.hades = new Room(this, ["Opening Inner Doors", "Boss", "Opening Outer Doors", "Closing Outer Doors"], [100, 450, 100, 100])
+        this.hades = new Room(this, ["Awaiting Carts/Guests","Opening Inner Doors", "Boss", "Opening Outer Doors", "Closing Outer Doors"], [-1, 100, 450, 100, 100])
         this.hadesLabel = this.add.text(this.sys.canvas.width / 2, 420, "hades status", titleStyle)
         this.hades.update = hadesUpdate
 
         //outdoor/disembark
-        this.mtn = new Room(this, ["Disembarking", "Returning Carts"], [600, 200])
+        this.mtn = new Room(this, ["Awaiting Carts/Guests","Disembarking", "Returning Carts"], [-1, 600, 200])
         this.mtnLabel = this.add.text(this.sys.canvas.width *3/4, 420, "outdoor status", titleStyle)
         this.mtn.update = mtnUpdate
 
@@ -116,7 +116,12 @@ class RideScene extends Phaser.Scene {
         this.q2Label.text = "house of hades queue\n" + this.q2.currentGuests
         this.q3Label.text = "hades' audience status\n" + this.q3.currentStatus + "\nguests:" + this.q3.currentGuests
         this.q4Label.text = "zag's room queue\n"+this.q4.currentStatus+ "\nguests:" + this.q4.currentGuests + "\navail carts:" + this.q4.availableCarts
-        this.tarLabel.text = "tartarus\n" + this.tar.currentStatus + "\nguests:" + this.tar.currentGuests
+        this.tarLabel.text = "tartarus status\n"+this.tar.currentStatus+ "\nguests:" + this.tar.currentGuests + "\navail carts:" + this.tar.availableCarts
+        this.aspLabel.text = "asphodel status\n"+this.asp.currentStatus+ "\nguests:" + this.asp.currentGuests + "\navail carts:" + this.asp.availableCarts
+        this.elyLabel.text = "elysium status\n"+this.ely.currentStatus+ "\nguests:" + this.ely.currentGuests + "\navail carts:" + this.ely.availableCarts
+        this.styxLabel.text = "styx status\n"+this.styx.currentStatus+ "\nguests:" + this.styx.currentGuests + "\navail carts:" + this.styx.availableCarts
+        this.hadesLabel.text = "hades status\n"+this.hades.currentStatus+ "\nguests:" + this.hades.currentGuests + "\navail carts:" + this.hades.availableCarts
+        this.mtnLabel.text = "mtn/outdoor status\n"+this.mtn.currentStatus+ "\nguests:" + this.mtn.currentGuests + "\navail carts:" + this.mtn.availableCarts
 
     }
 }

@@ -6,6 +6,7 @@ class Room {
         this.durationList = durations
         this.durationTillSwitch = -1
         this.currentGuests = 0
+        this.availableCarts = 0
         if (this.statusList.length != this.durationList.length){throw("statuses & durations not same length")}
     }
 
@@ -14,6 +15,12 @@ class Room {
     }
     subGuest(num = 1){
         this.currentGuests-=num
+    }
+    addCart(num = 1){
+        this.availableCarts+=num
+    }
+    subCart(num = 1){
+        this.availableCarts-=num
     }
 
     update(){
