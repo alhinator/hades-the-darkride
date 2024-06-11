@@ -17,17 +17,17 @@ function boatUpdate(self, time, delta) {
             self.b3 = 0
             break;
         case self.statusList[0]:
-            if (self.b1 == 0 && self.scene.q1.currentGuests >= 6) { //boarding
+            if (self.b1 == 0 && self.scene.q1.currentGuests >= 12 && self.scene.q2.currentGuests < 120) { //boarding
                 self.b1 = 1
-                self.addGuest(6)
-                self.scene.q1.subGuest(6)
+                self.addGuest(12)
+                self.scene.q1.subGuest(12)
             }
             if (self.b2 == -1) { //cycling
                 self.b2 = 0
             }
             if (self.b3 == 2) { //dropping
-                self.subGuest(6)
-                self.scene.q2.addGuest(6)
+                self.subGuest(12)
+                self.scene.q2.addGuest(12)
                 self.b3 = -1
             }
             self.durationTillSwitch -= delta
@@ -41,10 +41,10 @@ function boatUpdate(self, time, delta) {
                 self.b1 = 2
 
             }
-            if (self.b2 == 0 && self.scene.q1.currentGuests >= 6) { //boarding
+            if (self.b2 == 0 && self.scene.q1.currentGuests >= 12 && self.scene.q2.currentGuests < 120) { //boarding
                 self.b2 = 1
-                self.addGuest(6)
-                self.scene.q1.subGuest(6)
+                self.addGuest(12)
+                self.scene.q1.subGuest(12)
             }
             if (self.b3 == -1) { //cycling
                 self.b3 = 0
@@ -57,17 +57,17 @@ function boatUpdate(self, time, delta) {
             break;
         case self.statusList[2]:
             if (self.b1 == 2) { //dropping
-                self.subGuest(6)
-                self.scene.q2.addGuest(6)
+                self.subGuest(12)
+                self.scene.q2.addGuest(12)
                 self.b1 = -1
             }
             if (self.b2 == 1) { //transit
                 self.b2 = 2
             }
-            if (self.b3 == 0 && self.scene.q1.currentGuests >= 6) { //boarding
+            if (self.b3 == 0 && self.scene.q1.currentGuests >= 12 && self.scene.q2.currentGuests < 120) { //boarding
                 self.b3 = 1
-                self.addGuest(6)
-                self.scene.q1.subGuest(6)
+                self.addGuest(12)
+                self.scene.q1.subGuest(12)
             }
             self.durationTillSwitch -= delta
             if (self.durationTillSwitch < 0) {
@@ -80,8 +80,8 @@ function boatUpdate(self, time, delta) {
                 self.b1 = 0
             }
             if (self.b2 == 2) { //dropping
-                self.subGuest(6)
-                self.scene.q2.addGuest(6)
+                self.subGuest(12)
+                self.scene.q2.addGuest(12)
                 self.b2 = -1
             }
             if (self.b3 == 1) { //transit
@@ -109,12 +109,12 @@ function q3Update(self, time, delta) {
             self.durationTillSwitch = self.durationList[0]
             break;
         case self.statusList[0]:
-            if (self.scene.q2.currentGuests > 30 && self.scene.q4.currentGuests < 50) { //lock zag's room queue to less than 80.
+            if (self.scene.q2.currentGuests >= 48 && self.scene.q4.currentGuests < 50) { //lock zag's room queue to less than 90.
                 self.currentStatus = self.statusList[1]
                 self.durationTillSwitch = self.durationList[1]
 
-                self.scene.q2.subGuest(30)
-                self.addGuest(30)
+                self.scene.q2.subGuest(48)
+                self.addGuest(48)
             }
             break;
         case self.statusList[1]:
@@ -136,8 +136,8 @@ function q3Update(self, time, delta) {
                 self.currentStatus = self.statusList[0]
                 self.durationTillSwitch = self.durationList[0]
 
-                self.subGuest(30)
-                self.scene.q4.addGuest(30)
+                self.subGuest(48)
+                self.scene.q4.addGuest(48)
             }
     }
 }
